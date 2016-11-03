@@ -11,7 +11,7 @@ describe("a request", function(){
     var mockRequest = mockHelper.load("weather.json");
     app.request(mockRequest).then(function(response){
     console.log("no response", response);
-    expect(response.response.outputSpeech.ssml).to.equal('<speak>It\'s 59.25 degrees Fahrenheit. Get a hoodie.</speak>');
+    expect(response.response.outputSpeech.ssml).to.equal('<speak>It\'s 19.98 degrees Fahrenheit in Fairbanks. Bundle up!</speak>');
     done();
     });
   });

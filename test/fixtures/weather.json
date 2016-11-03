@@ -18,7 +18,10 @@
     "intent": {
       "name": "Weather",
       "slots": {
-        
+        "City": {
+          "name": "City",
+          "value": "Fairbanks"
+        }
       }
     }
   },

@@ -4,8 +4,6 @@ var app = new alexa.app('Joker');
 var weather = require('openweather-apis');
 
 weather.setLang('en');
-
-weather.setCity('Portland');
 weather.setUnits('imperial');
 weather.setAPPID('fc0494038d234a5c779a400630b716c2');
 
@@ -13,29 +11,32 @@ weather.setAPPID('fc0494038d234a5c779a400630b716c2');
 app.intent('Weather',
   {
     'slots':{
-
+      "City": "AMAZON.US_CITY"
     },
     'utterances':[
       'What should I wear today?'
     ]
   },
   (request, response) => {
+    var city = request.slot("City");
+    weather.setCity(city);
     weather.getTemperature(function(err, temp){
-      console.log(temp);
       response.say("It's");
       response.say(temp.toString());
-      response.say("degrees Fahrenheit.");
+      response.say("degrees Fahrenheit in");
+      response.say(city + ".");
       response.say(function(){
         if(temp > 70) {
           return "No jacket is needed, but a shirt is a good idea!";
         } else if(temp < 40){
-          return "Bundle up";
+          return "Bundle up!";
         } else{
           return "Get a hoodie.";
         }
       }());
       response.send();
     });
+
     return false;
   }
 );
