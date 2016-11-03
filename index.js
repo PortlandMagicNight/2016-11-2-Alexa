@@ -14,7 +14,7 @@ app.intent('Weather',
       "City": "AMAZON.US_CITY"
     },
     'utterances':[
-      'What should I wear today?'
+      'What should I wear today in {City}?'
     ]
   },
   (request, response) => {
