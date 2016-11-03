@@ -1,28 +1,42 @@
 //"use strict";
 var alexa = require('alexa-app');
 var app = new alexa.app('Joker');
+var weather = require('openweather-apis');
 
-app.intent('Joke',
+weather.setLang('en');
+
+weather.setCity('Portland');
+weather.setUnits('imperial');
+weather.setAPPID('fc0494038d234a5c779a400630b716c2');
+
+
+app.intent('Weather',
   {
     'slots':{
+
     },
     'utterances':[
-      "shoot me a joke",
-      "joke time",
-      "tell me joke",
-      "can I hear a joke",
-      "yes"
+      'What should I wear today?'
     ]
   },
   (request, response) => {
-    const jokes = [
-      "What do you call two straight days of rain in Portland?  Normal.",
-      "What is the difference between Oregon and Washington?  Washingtonians have nicer neighbors.",
-      "You might be from Portland if you know a brid and groom that registered at REI"
-    ];
-    var joke =  jokes[Math.floor(Math.random() * jokes.length)];
-    response.say(joke);
-    response.say("Would you like to hear another?");
+    weather.getTemperature(function(err, temp){
+      console.log(temp);
+      response.say("It's");
+      response.say(temp.toString());
+      response.say("degrees Fahrenheit.");
+      response.say(function(){
+        if(temp > 70) {
+          return "No jacket is needed, but a shirt is a good idea!";
+        } else if(temp < 40){
+          return "Bundle up";
+        } else{
+          return "Get a hoodie.";
+        }
+      }());
+      response.send();
+    });
+    return false;
   }
 );
 
@@ -39,14 +53,14 @@ app.intent('Done',
   }
 );
 
-app.intent('AMAZON.HelpIntent', 
+app.intent('AMAZON.HelpIntent',
   {
     'utterances':[
       "for help {customizing|setting up|getting started}"
     ]
   },
   (request, response) => {
-    
+
   }
 );
 
